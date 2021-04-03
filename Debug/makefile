@@ -54,8 +54,8 @@ all: main-build
 main-build: subROV.elf secondary-outputs
 
 # Tool invocations
-subROV.elf: $(OBJS) $(USER_OBJS) C:\Users\czsta\Documents\rope\stm32\subROV\STM32F405VGTX_FLASH.ld
-	arm-none-eabi-gcc -o "subROV.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\czsta\Documents\rope\stm32\subROV\STM32F405VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="subROV.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+subROV.elf: $(OBJS) $(USER_OBJS) E:\Documents\rope\stm32\subROV\STM32F405VGTX_FLASH.ld
+	arm-none-eabi-gcc -o "subROV.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"E:\Documents\rope\stm32\subROV\STM32F405VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="subROV.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

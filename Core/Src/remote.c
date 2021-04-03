@@ -27,9 +27,9 @@
 #include "main.h"
 uint8_t remoteBuffer[25] = { }; //遥控器包缓存
 float ch_float[6] = { }; //遥控器通道
+//Roll Factor,Pitch Factor,Yaw Factor,Throttle Factor,Forward Factor,Lateral Factor
 float conf=0;
 float val=0;
-//Roll Factor,Pitch Factor,Yaw Factor,Throttle Factor,Forward Factor,Lateral Factor
 void remoteInit(UART_HandleTypeDef *huart)
 {
     __HAL_UART_ENABLE_IT(huart, UART_IT_IDLE);
