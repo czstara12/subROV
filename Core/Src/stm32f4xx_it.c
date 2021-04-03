@@ -255,17 +255,17 @@ void TIM1_UP_TIM10_IRQHandler(void)
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
-	extern unsigned char remoteBuffer[25];
+	extern unsigned char remoteBuffer[32];
 	    if(USART1->SR & 0x10)
 	    {
 	        __HAL_UART_CLEAR_IDLEFLAG(&huart1);
 	        HAL_UART_AbortReceive(&huart1);
-	        HAL_UART_Receive_DMA(&huart1, remoteBuffer, 25);
-	        if (0x5a == remoteBuffer[0]&&0xa5 == remoteBuffer[1])
+	        HAL_UART_Receive_DMA(&huart1, remoteBuffer+16, 25);
+	        if (0x5a == remoteBuffer[16]&&0xa5 == remoteBuffer[17])
 	        {
-	        	void remote(UART_HandleTypeDef *huart);
+	        	void remote(uint8_t * remoteBuffer);
 
-	        	remote(&huart1);
+	        	remote(remoteBuffer + 16);
 	        }
 	    }
   /* USER CODE END USART1_IRQn 0 */
@@ -305,7 +305,7 @@ void UART5_IRQHandler(void)
 {
   /* USER CODE BEGIN UART5_IRQn 0 */
 
-    extern unsigned char remoteBuffer[25];
+    extern unsigned char remoteBuffer[32];
     if(UART5->SR & 0x10)
     {
         __HAL_UART_CLEAR_IDLEFLAG(&huart5);
@@ -313,9 +313,9 @@ void UART5_IRQHandler(void)
         HAL_UART_Receive_DMA(&huart5, remoteBuffer, 25);
         if (0x5a == remoteBuffer[0]&&0xa5 == remoteBuffer[1])
         {
-        	void remote(UART_HandleTypeDef *huart);
+        	void remote(uint8_t * remoteBuffer);
 
-        	remote(&huart5);
+        	remote(remoteBuffer);
         }
     }
   /* USER CODE END UART5_IRQn 0 */

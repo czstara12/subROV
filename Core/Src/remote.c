@@ -25,7 +25,7 @@
 #include "motor.h"
 #include "PID.h"
 #include "main.h"
-uint8_t remoteBuffer[25] = { }; //遥控器包缓存
+uint8_t remoteBuffer[32] = { }; //遥控器包缓存
 float ch_float[6] = { }; //遥控器通道
 //Roll Factor,Pitch Factor,Yaw Factor,Throttle Factor,Forward Factor,Lateral Factor
 float conf=0;
@@ -36,7 +36,7 @@ void remoteInit(UART_HandleTypeDef *huart)
     HAL_UART_Receive_DMA(huart, remoteBuffer, 25);
 }
 //从中断触发 每次执行 将遥控器通道数据提取 归一到ch_float中
-void remote(UART_HandleTypeDef *huart)
+void remote(uint8_t * remoteBuffer)
 {
 	float *dat = (float*)(remoteBuffer+4);
 	if(remoteBuffer[3]==0x00)

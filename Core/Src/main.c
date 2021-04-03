@@ -180,6 +180,7 @@ int main(void)
 	OLED_Init();
 	//PID_init();
 	remoteInit(&huart5);
+	remoteInit(&huart1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -1028,9 +1029,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       target_ver[0] = ch_float[0]*30;
       target_ver[1] = ch_float[1]*30;
       target_ver[2] -= ch_float[2];
-      target_ver[3] = ch_float[3]; //求误�?
-      target_ver[4] = ch_float[4]; //求误�?
-      target_ver[5] = ch_float[5]; //求误�?
+      target_ver[3] = ch_float[3]; //求误�??
+      target_ver[4] = ch_float[4]; //求误�??
+      target_ver[5] = ch_float[5]; //求误�??
       if(pidinit==1)
     	  PID_CTRL();
       setmotor();
