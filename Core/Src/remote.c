@@ -69,3 +69,7 @@ void remote(uint8_t * remoteBuffer)
 		ch_float[3]=dat[1];
 	}
 }
+void remoteerr()
+{
+
+}

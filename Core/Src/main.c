@@ -62,6 +62,7 @@ UART_HandleTypeDef huart5;
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
+DMA_HandleTypeDef hdma_uart4_rx;
 DMA_HandleTypeDef hdma_uart5_rx;
 DMA_HandleTypeDef hdma_usart1_rx;
 DMA_HandleTypeDef hdma_usart2_rx;
@@ -97,7 +98,7 @@ static void MX_TIM12_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 int _write(int file, char *ptr, int len) {
-	HAL_UART_Transmit(&huart5, (uint8_t*) ptr, len, 300);
+	HAL_UART_Transmit(&huart1, (uint8_t*) ptr, len, 300);
 	return len;
 }
 void delay_us(unsigned int us) {
@@ -928,6 +929,9 @@ static void MX_DMA_Init(void)
   /* DMA1_Stream0_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
+  /* DMA1_Stream2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream2_IRQn);
   /* DMA1_Stream5_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream5_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream5_IRQn);
@@ -1029,10 +1033,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       target_ver[0] = ch_float[0]*30;
       target_ver[1] = ch_float[1]*30;
       target_ver[2] -= ch_float[2];
-      target_ver[3] = ch_float[3]; //求误�??
-      target_ver[4] = ch_float[4]; //求误�??
-      target_ver[5] = ch_float[5]; //求误�??
-      if(pidinit==1)
+      target_ver[3] = ch_float[3]; //求误�???
+      target_ver[4] = ch_float[4]; //求误�???
+      target_ver[5] = ch_float[5]; //求误�???
+      if(pidinit==1&&lock!=0)
     	  PID_CTRL();
       setmotor();
   }

@@ -3,6 +3,7 @@
 "Core/Src/main.o"
 "Core/Src/motor.o"
 "Core/Src/oled.o"
+"Core/Src/raspi.o"
 "Core/Src/remote.o"
 "Core/Src/stm32f4xx_hal_msp.o"
 "Core/Src/stm32f4xx_hal_timebase_tim.o"
