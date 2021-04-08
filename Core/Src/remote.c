@@ -1,20 +1,3 @@
-/**
- ******************************************************************************
- * @file           : remote.c
- * @brief          : S.Bus遥控器驱动
- ******************************************************************************
- * @attention
- *
- * &copy; Copyright (c) 2020 智茂科技.
- * All rights reserved.
- *
- * This software component is licensed by 智茂科技 under BSD 3-Clause license,
- * the "License"; You may not use this file except in compliance with the
- * License. You may obtain a copy of the License at:
- *                        opensource.org/licenses/BSD-3-Clause
- *
- ******************************************************************************
- */
 /*
  * remote.c
  *
@@ -30,10 +13,18 @@ float ch_float[6] = { }; //遥控器通道
 //Roll Factor,Pitch Factor,Yaw Factor,Throttle Factor,Forward Factor,Lateral Factor
 float conf=0;
 float val=0;
+extern UART_HandleTypeDef huart5;
+extern UART_HandleTypeDef huart1;
 void remoteInit(UART_HandleTypeDef *huart)
 {
+    if(&huart1==huart)
+	{
+		HAL_UART_Receive_DMA(huart, remoteBuffer+16, 25);
+	}else if(&huart5==huart)
+	{
+		HAL_UART_Receive_DMA(huart, remoteBuffer, 25);
+	}
     __HAL_UART_ENABLE_IT(huart, UART_IT_IDLE);
-    HAL_UART_Receive_DMA(huart, remoteBuffer, 25);
 }
 //从中断触发 每次执行 将遥控器通道数据提取 归一到ch_float中
 void remote(uint8_t * remoteBuffer)
@@ -68,8 +59,22 @@ void remote(uint8_t * remoteBuffer)
 		ch_float[2]=dat[0];
 		ch_float[3]=dat[1];
 	}
+    target_ver[0] = ch_float[0]*30;
+    target_ver[1] = ch_float[1]*30;
+    target_ver[2] -= ch_float[2];
+    target_ver[3] = ch_float[3];
+    target_ver[4] = ch_float[4];
+    target_ver[5] = ch_float[5];
 }
-void remoteerr()
+void remoteerr(UART_HandleTypeDef *huart)
 {
-
+    //HAL_UART_AbortReceive(huart);
+    if(&huart1==huart)
+	{
+		HAL_UART_Receive_DMA(huart, remoteBuffer+16, 25);
+	}else if(&huart5==huart)
+	{
+		HAL_UART_Receive_DMA(huart, remoteBuffer, 25);
+	}
+    //HAL_UART_Receive_DMA(huart, remoteBuffer, 16);
 }

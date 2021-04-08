@@ -28,6 +28,7 @@
 #include "motor.h"
 #include "PID.h"
 #include "remote.h"
+#include "raspi.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -116,13 +117,28 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	if(&huart2==huart)
 	{
 		VRUupdate();
+	}else if(&huart4==huart)
+	 {
+		raspi();
 	}
 }
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
 {
 	if(&huart2==huart)
 	{
-		VRUerror();
+		VRUerror(huart);
+	}else if(&huart1==huart)
+	{
+		//remoteerr(huart);
+	}else if(&huart5==huart)
+	{
+		remoteerr(huart);
+	}else if(&huart3==huart)
+	{
+		//
+	}else if(&huart4==huart)
+	{
+		raspierr(huart);
 	}
 }
 /* USER CODE END 0 */
@@ -181,7 +197,8 @@ int main(void)
 	OLED_Init();
 	//PID_init();
 	remoteInit(&huart5);
-	remoteInit(&huart1);
+	raspiInit(&huart4);
+	//remoteInit(&huart1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -193,6 +210,7 @@ int main(void)
   {
 	  OLED_ShowString(0,12,"run time:");
 	  OLED_ShowNumber(0, 24, HAL_GetTick()/1000, 3, 12);
+	  OLED_ShowNumber(0, 36, raspiBuffer[10], 3, 12);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -959,6 +977,9 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(OLED_CSN_GPIO_Port, OLED_CSN_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
@@ -971,6 +992,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Alternate = GPIO_AF3_TIM9;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : LED1_Pin */
+  GPIO_InitStruct.Pin = LED1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LED1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : OLED_CSN_Pin */
   GPIO_InitStruct.Pin = OLED_CSN_Pin;
@@ -1028,14 +1056,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   else if(htim->Instance == TIM1)
   {
 	  HAL_UART_Transmit_IT(&huart5, (unsigned char *)&frame, sizeof(frame));
+	  //HAL_UART_Transmit_IT(&huart1, (unsigned char *)&frame, sizeof(frame));
 	  OLED_Refresh_Gram();
 
-      target_ver[0] = ch_float[0]*30;
-      target_ver[1] = ch_float[1]*30;
-      target_ver[2] -= ch_float[2];
-      target_ver[3] = ch_float[3]; //求误�???
-      target_ver[4] = ch_float[4]; //求误�???
-      target_ver[5] = ch_float[5]; //求误�???
       if(pidinit==1&&lock!=0)
     	  PID_CTRL();
       setmotor();

@@ -12,7 +12,7 @@
 
 void VRUinit(UART_HandleTypeDef *huart);
 void VRUupdate();
-void VRUerror();
+void VRUerror(UART_HandleTypeDef *huart);
 extern float pitch, roll, yaw;
 
 #endif /* INC_VRU_H_ */

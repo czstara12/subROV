@@ -271,6 +271,7 @@ void TIM1_UP_TIM10_IRQHandler(void)
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
+	/*
 	extern unsigned char remoteBuffer[32];
 	    if(USART1->SR & 0x10)
 	    {
@@ -283,7 +284,7 @@ void USART1_IRQHandler(void)
 
 	        	remote(remoteBuffer + 16);
 	        }
-	    }
+	    }*/
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
@@ -320,7 +321,16 @@ void USART2_IRQHandler(void)
 void UART4_IRQHandler(void)
 {
   /* USER CODE BEGIN UART4_IRQn 0 */
-
+    extern unsigned char raspiBuffer[82];
+    if(UART4->SR & 0x10)
+    {
+        __HAL_UART_CLEAR_IDLEFLAG(&huart4);
+        if(raspiBuffer[0] != 0x5a)
+        {
+            HAL_UART_AbortReceive(&huart4);
+            HAL_UART_Receive_DMA(&huart4, raspiBuffer, 12);
+        }
+    }
   /* USER CODE END UART4_IRQn 0 */
   HAL_UART_IRQHandler(&huart4);
   /* USER CODE BEGIN UART4_IRQn 1 */

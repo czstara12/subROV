@@ -1,20 +1,3 @@
-/**
-  ******************************************************************************
-  * @file           : PIDCON.c
-  * @brief          : PID控制逻辑
-  ******************************************************************************
-  * @attention
-  *
-  * &copy; Copyright (c) 2020 智茂科技.
-  * All rights reserved.
-  *
-  * This software component is licensed by 智茂科技 under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */
 /*
  * PIDCON.c
  *
@@ -32,9 +15,9 @@
 //kp ti dt 输出 前1次误差 前2次误差
 float pid_ver[6][7] =
     {
-        {0.03, 0.00004, 0.02},
-        {-0.03, -0.00004, -0.02},
-        {-0.003, 0, -0.02},
+        {0.03, 0.00004, 0.2},
+        {-0.015, -0.00006, -0.3},
+        {-0.003, 0, -0.1},
         {-1, 0, 0},
         {1, 0, 0},
         {1, 0, 0},
@@ -55,15 +38,16 @@ void PID_CTRL() //综合控制 encodeL左侧编码器 encodeR右侧编码器
     //out += Kpr * (err - err1) + Tir * err+Tdr*(err-2*err1+err2); //
     //增量式PID方程 输出=输出+P*(本次误差-上次误差)+I*本次误差
     float err[6];
-
-    if (target_ver[2] > 180)
-        target_ver[2] -= 360;
-    if (target_ver[2] < -180)
-        target_ver[2] += 360;
+    float tmp_yaw;
+    tmp_yaw = target_ver[2];
+    if (tmp_yaw > 180)
+    	tmp_yaw = target_ver[2] - 360;
+    if (tmp_yaw < -180)
+    	tmp_yaw = target_ver[2] + 360;
 
     err[0] = target_ver[0] - roll;  //求误差
     err[1] = target_ver[1] - pitch; //求误差
-    err[2] = target_ver[2] - yaw;   //求误差
+    err[2] = tmp_yaw - yaw;   //求误差
 
     if (err[2] > 180)
         err[2] -= 360;

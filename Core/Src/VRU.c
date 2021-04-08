@@ -12,11 +12,11 @@
 unsigned char ch110[82];
 float pitch, roll, yaw,*dat;
 int tim;
-UART_HandleTypeDef *VRUhuart;
+//UART_HandleTypeDef *VRUhuart;
 
 void VRUinit(UART_HandleTypeDef *huart)
 {
-	VRUhuart = huart;
+	//VRUhuart = huart;
     __HAL_UART_ENABLE_IT(huart, UART_IT_IDLE);
     HAL_UART_Receive_DMA(huart, ch110, 82);
 }
@@ -52,8 +52,8 @@ void VRUupdate()
         setmotor();
     }*/
 }
-void VRUerror()
+void VRUerror(UART_HandleTypeDef *huart)
 {
-    HAL_UART_AbortReceive(VRUhuart);
-    HAL_UART_Receive_DMA(VRUhuart, ch110, 82);
+    HAL_UART_AbortReceive(huart);
+    HAL_UART_Receive_DMA(huart, ch110, 82);
 }
