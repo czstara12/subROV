@@ -18,11 +18,11 @@ float raspich_float[4] = { }; //树莓派通道
 
 void raspiInit(UART_HandleTypeDef *huart)
 {
-    //__HAL_UART_ENABLE_IT(huart, UART_IT_IDLE);
+    __HAL_UART_ENABLE_IT(huart, UART_IT_IDLE);
     HAL_UART_Receive_DMA(huart, raspiBuffer, 12);
 }
 //从中断触发 每次执行 将遥控器通道数据提取 归一到ch_float中
-void raspi()
+void raspiUpdate()
 {
 	short * date = (short *)(raspiBuffer + 2);
 	for(int i=0;i<4;i++)

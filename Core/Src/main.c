@@ -29,6 +29,7 @@
 #include "PID.h"
 #include "remote.h"
 #include "raspi.h"
+#include "deepSsensor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,6 +68,7 @@ DMA_HandleTypeDef hdma_uart4_rx;
 DMA_HandleTypeDef hdma_uart5_rx;
 DMA_HandleTypeDef hdma_usart1_rx;
 DMA_HandleTypeDef hdma_usart2_rx;
+DMA_HandleTypeDef hdma_usart3_rx;
 
 /* USER CODE BEGIN PV */
 struct Frame frame={
@@ -119,7 +121,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		VRUupdate();
 	}else if(&huart4==huart)
 	 {
-		raspi();
+		raspiUpdate();
 	}
 }
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
@@ -135,12 +137,13 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
 		remoteerr(huart);
 	}else if(&huart3==huart)
 	{
-		//
+		deepSensorerr(huart);
 	}else if(&huart4==huart)
 	{
 		raspierr(huart);
 	}
 }
+
 /* USER CODE END 0 */
 
 /**
@@ -198,7 +201,11 @@ int main(void)
 	//PID_init();
 	remoteInit(&huart5);
 	raspiInit(&huart4);
+	deepSensorInit(&huart3);
 	//remoteInit(&huart1);
+
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -211,6 +218,7 @@ int main(void)
 	  OLED_ShowString(0,12,"run time:");
 	  OLED_ShowNumber(0, 24, HAL_GetTick()/1000, 3, 12);
 	  OLED_ShowNumber(0, 36, raspiBuffer[10], 3, 12);
+	  OLED_ShowNumber(0, 48, (int)(deep*100), 3, 12);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -947,6 +955,9 @@ static void MX_DMA_Init(void)
   /* DMA1_Stream0_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
+  /* DMA1_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
   /* DMA1_Stream2_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream2_IRQn);

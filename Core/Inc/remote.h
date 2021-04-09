@@ -11,7 +11,7 @@
 #include "main.h"
 
 void remoteInit(UART_HandleTypeDef *huart);
-void remote(uint8_t * remoteBuffer);
+void remoteUpdate(uint8_t * remoteBuffer);
 void remoteerr(UART_HandleTypeDef *huart);
 
 extern float ch_float[6];//遥控器通道

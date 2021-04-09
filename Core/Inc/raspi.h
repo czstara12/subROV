@@ -9,7 +9,7 @@
 #define INC_RASPI_H_
 #include "main.h"
 void raspiInit(UART_HandleTypeDef *huart);
-void raspi();
+void raspiUpdate();
 void raspierr(UART_HandleTypeDef *huart);
 
 extern uint8_t raspiBuffer[32];

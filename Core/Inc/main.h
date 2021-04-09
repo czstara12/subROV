@@ -37,7 +37,7 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-#define CH_COUNT 26
+#define CH_COUNT 32
 struct Frame {
     float fdata[CH_COUNT];
     unsigned char tail[4];

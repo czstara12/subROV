@@ -9,6 +9,7 @@
 #include "VRU.h"
 //#include "remote.h"
 #include "motor.h"
+#include "deepSsensor.h"
 
 //Roll Factor,Pitch Factor,Yaw Factor,Throttle Factor,Forward Factor,Lateral Factor
 
@@ -18,7 +19,7 @@ float pid_ver[6][7] =
         {0.03, 0.00004, 0.2},
         {-0.015, -0.00006, -0.3},
         {-0.003, 0, -0.1},
-        {-1, 0, 0},
+        {-0.1, -0.00001, 0},
         {1, 0, 0},
         {1, 0, 0},
 };
@@ -30,6 +31,7 @@ void PID_init()
     target_ver[0] = 0;
     target_ver[1] = 0;
     target_ver[2] = yaw;
+    target_ver[3] = 0.2;
     pidinit = 1;
 }
 
@@ -54,7 +56,7 @@ void PID_CTRL() //综合控制 encodeL左侧编码器 encodeR右侧编码器
     if (err[2] < -180)
         err[2] += 360;
 
-    err[3] = target_ver[3]; //求误差
+    err[3] = target_ver[3] - deep; //求误差
     err[4] = target_ver[4]; //求误差
     err[5] = target_ver[5]; //求误差
     for (int i = 0; i < 6; i++)

@@ -1,5 +1,6 @@
 "Core/Src/PID.o"
 "Core/Src/VRU.o"
+"Core/Src/deepSsensor.o"
 "Core/Src/main.o"
 "Core/Src/motor.o"
 "Core/Src/oled.o"

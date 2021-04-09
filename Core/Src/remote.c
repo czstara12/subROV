@@ -27,7 +27,7 @@ void remoteInit(UART_HandleTypeDef *huart)
     __HAL_UART_ENABLE_IT(huart, UART_IT_IDLE);
 }
 //从中断触发 每次执行 将遥控器通道数据提取 归一到ch_float中
-void remote(uint8_t * remoteBuffer)
+void remoteUpdate(uint8_t * remoteBuffer)
 {
 	float *dat = (float*)(remoteBuffer+4);
 	if(remoteBuffer[3]==0x00)
@@ -65,6 +65,10 @@ void remote(uint8_t * remoteBuffer)
     target_ver[3] = ch_float[3];
     target_ver[4] = ch_float[4];
     target_ver[5] = ch_float[5];
+
+    frame.fdata[29]=target_ver[0];
+    frame.fdata[30]=target_ver[1];
+    frame.fdata[31]=target_ver[2];
 }
 void remoteerr(UART_HandleTypeDef *huart)
 {
