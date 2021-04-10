@@ -8,6 +8,7 @@
 #include "motor.h"
 #include "PID.h"
 #include "main.h"
+#include "VRU.h"
 uint8_t remoteBuffer[32] = { }; //遥控器包缓存
 float ch_float[6] = { }; //遥控器通道
 //Roll Factor,Pitch Factor,Yaw Factor,Throttle Factor,Forward Factor,Lateral Factor
@@ -61,7 +62,7 @@ void remoteUpdate(uint8_t * remoteBuffer)
 	}
     target_ver[0] = ch_float[0]*30;
     target_ver[1] = ch_float[1]*30;
-    target_ver[2] -= ch_float[2];
+    target_ver[2] = yaw + ch_float[2];
     target_ver[3] = ch_float[3];
     target_ver[4] = ch_float[4];
     target_ver[5] = ch_float[5];
