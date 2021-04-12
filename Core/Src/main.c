@@ -211,14 +211,14 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   printf("hello\r\n");
-  OLED_ShowString(0,0,"runing...");
+  //OLED_ShowString(0,0,"runing...");
 
   while (1)
   {
 	  OLED_ShowString(0,12,"run time:");
-	  OLED_ShowNumber(0, 24, HAL_GetTick()/1000, 3, 12);
-	  OLED_ShowNumber(0, 36, raspiBuffer[10], 3, 12);
-	  OLED_ShowNumber(0, 48, (int)(deep*100), 3, 12);
+	  OLED_ShowNumber(64, 12, HAL_GetTick()/1000, 3, 12);
+	  OLED_ShowNumber(64, 24, raspiBuffer[10], 3, 12);
+	  OLED_ShowNumber(64, 36, (int)(deep*100), 3, 12);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

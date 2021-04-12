@@ -62,7 +62,7 @@ void remoteUpdate(uint8_t * remoteBuffer)
 	}
     target_ver[0] = ch_float[0]*30;
     target_ver[1] = ch_float[1]*30;
-    target_ver[2] = yaw + ch_float[2];
+    target_ver[2] = yaw + ch_float[2]*30;
     target_ver[3] = ch_float[3];
     target_ver[4] = ch_float[4];
     target_ver[5] = ch_float[5];

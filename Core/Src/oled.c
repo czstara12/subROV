@@ -119,7 +119,7 @@ void OLED_ShowChar(u8 x,u8 y,u8 chr,u8 size,u8 mode)
 				x++;
 				break;
 			}
-		}  	 
+		}
     }          
 }
 

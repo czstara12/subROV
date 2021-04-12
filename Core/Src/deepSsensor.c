@@ -19,6 +19,7 @@ void deepSensorInit(UART_HandleTypeDef *huart)
 void deepSensorUpdate(unsigned char *deepSsensorBuff)
 {
 	sscanf((char *)deepSensorBuff,"T=%fD=%f",&temperature,&deep);
+	if(deep<0)deep=0;
 	frame.fdata[27]=deep;
 	frame.fdata[28]=temperature;
 }
