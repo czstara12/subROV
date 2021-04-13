@@ -31,7 +31,7 @@ void PID_init()
     target_ver[0] = 0;
     target_ver[1] = 0;
     target_ver[2] = yaw;
-    target_ver[3] = 0.2;
+    target_ver[3] = 0.05;
     pidinit = 1;
 }
 
