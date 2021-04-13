@@ -17,5 +17,6 @@ void remoteerr(UART_HandleTypeDef *huart);
 extern float ch_float[6];//遥控器通道
 extern float conf;
 extern float val;
+extern float yawa;
 
 #endif /* INC_REMOTE_H_ */

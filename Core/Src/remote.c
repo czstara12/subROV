@@ -14,6 +14,7 @@ float ch_float[6] = { }; //遥控器通道
 //Roll Factor,Pitch Factor,Yaw Factor,Throttle Factor,Forward Factor,Lateral Factor
 float conf=0;
 float val=0;
+float yawa = 0;
 extern UART_HandleTypeDef huart5;
 extern UART_HandleTypeDef huart1;
 void remoteInit(UART_HandleTypeDef *huart)
@@ -62,7 +63,7 @@ void remoteUpdate(uint8_t * remoteBuffer)
 	}
     target_ver[0] = ch_float[0]*30;
     target_ver[1] = ch_float[1]*30;
-    target_ver[2] = yaw + ch_float[2]*30;
+    yawa = 0.02*ch_float[2]*30;
     target_ver[3] = ch_float[3];
     target_ver[4] = ch_float[4];
     target_ver[5] = ch_float[5];
