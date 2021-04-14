@@ -38,6 +38,10 @@ void raspiUpdate()
     	HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
     lock=raspiBuffer[11];
 
+    frame.fdata[28]=target_ver[2];
+    frame.fdata[29]=target_ver[3];
+    frame.fdata[30]=target_ver[4];
+    frame.fdata[31]=target_ver[5];//回传三轴数据目标
 }
 void raspierr(UART_HandleTypeDef *huart)
 {

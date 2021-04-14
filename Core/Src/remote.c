@@ -12,7 +12,7 @@
 uint8_t remoteBuffer[32] = { }; //遥控器包缓存
 float ch_float[6] = { }; //遥控器通道
 //Roll Factor,Pitch Factor,Yaw Factor,Throttle Factor,Forward Factor,Lateral Factor
-float conf=0;
+int i_conf;
 float val=0;
 float yawa = 0;
 extern UART_HandleTypeDef huart5;
@@ -45,21 +45,22 @@ void remoteUpdate(uint8_t * remoteBuffer)
 		lock = remoteBuffer[7];
 	}else if(remoteBuffer[3]==0x03)//通道选择
 	{
-		conf=dat[0];
-		int i_conf=(int)conf;
+		i_conf=(int)dat[0];
 		val=pid_ver[i_conf/3][i_conf%3];
-		frame.fdata[24]=conf;
+		frame.fdata[24]=dat[0];
 		frame.fdata[25]=val;
 	}else if(remoteBuffer[3]==0x04)//通道值
 	{
 		val=dat[0];
-		int i_conf=(int)conf;
 		pid_ver[i_conf/3][i_conf%3]=val;
 		frame.fdata[25]=val;
 	}else if(remoteBuffer[3]==0x05)
 	{
 		ch_float[2]=dat[0];
-		ch_float[3]=dat[1];
+		//ch_float[3]=dat[1];
+	}else if(remoteBuffer[3]==0x06)
+	{
+		ch_float[3]=dat[0];
 	}
     target_ver[0] = ch_float[0]*30;
     target_ver[1] = ch_float[1]*30;
@@ -67,10 +68,7 @@ void remoteUpdate(uint8_t * remoteBuffer)
     target_ver[3] = ch_float[3];
     target_ver[4] = ch_float[4];
     target_ver[5] = ch_float[5];
-
-    frame.fdata[29]=target_ver[0];
-    frame.fdata[30]=target_ver[1];
-    frame.fdata[31]=target_ver[2];
+    frame.fdata[26]=target_ver[i_conf/3];
 }
 void remoteerr(UART_HandleTypeDef *huart)
 {
