@@ -38,6 +38,25 @@ void raspiUpdate()
     target_ver[3] = raspich_float[1];
     target_ver[4] = raspich_float[2];
     target_ver[5] += raspich_float[3];
+    switch(raspiBuffer[10])
+    {
+    case 0:
+    	TIM12->CCR1=0;
+    	TIM12->CCR2=0;
+    	break;
+    case 1:
+    	TIM12->CCR1=255;
+    	TIM12->CCR2=0;
+    	break;
+    case 2:
+    	TIM12->CCR1=0;
+    	TIM12->CCR2=255;
+    	break;
+    default:
+    	TIM12->CCR1=255;
+    	TIM12->CCR2=255;
+    	break;
+    }
     if(raspiBuffer[10]==0)
     	HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
     else
