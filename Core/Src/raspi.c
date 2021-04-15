@@ -27,11 +27,16 @@ void raspiUpdate()
 	short * date = (short *)(raspiBuffer + 2);
 	for(int i=0;i<4;i++)
 		raspich_float[i]=1.0*date[i]/0x7fff;
-
+/*
     target_ver[2] = yaw + raspich_float[0]*180;
     target_ver[3] = raspich_float[1];
     target_ver[4] = raspich_float[2];
-    target_ver[5] = raspich_float[3];
+    target_ver[5] = raspich_float[3];*/
+
+    target_ver[2] += raspich_float[0]*90;
+    target_ver[3] = raspich_float[1];
+    target_ver[4] = raspich_float[2];
+    target_ver[5] += raspich_float[3];
     if(raspiBuffer[10]==0)
     	HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
     else
