@@ -18,6 +18,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <deepSensor.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -29,7 +30,6 @@
 #include "PID.h"
 #include "remote.h"
 #include "raspi.h"
-#include "deepSsensor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -213,12 +213,14 @@ int main(void)
   printf("hello\r\n");
   //OLED_ShowString(0,0,"runing...");
 
+  OLED_ShowString(0,12,"run time:");
+  OLED_ShowString(0,12,"worning:");
+  OLED_ShowString(0,12,"temp:");
   while (1)
   {
-	  OLED_ShowString(0,12,"run time:");
 	  OLED_ShowNumber(64, 12, HAL_GetTick()/1000, 3, 12);
-	  OLED_ShowNumber(64, 24, raspiBuffer[10], 3, 12);
-	  OLED_ShowNumber(64, 36, (int)(deep*100), 3, 12);
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

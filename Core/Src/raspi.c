@@ -10,6 +10,7 @@
 #include "motor.h"
 #include "PID.h"
 #include "VRU.h"
+#include "oled.h"
 uint8_t raspiBuffer[32] = { }; //树莓派包缓存
 float raspich_float[4] = { }; //树莓派通道
 //0x5a 0xa5 Yaw Factor Throttle Factor Forward Factor Lateral Factor LED lock
@@ -47,6 +48,8 @@ void raspiUpdate()
     frame.fdata[29]=target_ver[3];
     frame.fdata[30]=target_ver[4];
     frame.fdata[31]=target_ver[5];//回传三轴数据目标
+
+    OLED_ShowNumber(64, 24, raspiBuffer[10], 3, 12);
 }
 void raspierr(UART_HandleTypeDef *huart)
 {

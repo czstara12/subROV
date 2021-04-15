@@ -4,12 +4,12 @@
  *  Created on: 2020年7月1日
  *      Author: starstory_星辰物语
  */
+#include <deepSensor.h>
 #include "PID.h"
 
 #include "VRU.h"
 #include "remote.h"
 #include "motor.h"
-#include "deepSsensor.h"
 
 //Roll Factor,Pitch Factor,Yaw Factor,Throttle Factor,Forward Factor,Lateral Factor
 

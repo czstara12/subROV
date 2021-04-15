@@ -4,8 +4,8 @@
  *  Created on: Apr 9, 2021
  *      Author: czsta
  */
-#include "main.h"
 #include <stdio.h>
+#include "oled.h"
 
 unsigned char deepSensorBuff[20];
 float deep,temperature;
@@ -21,6 +21,7 @@ void deepSensorUpdate(unsigned char *deepSsensorBuff)
 	sscanf((char *)deepSensorBuff,"T=%fD=%f",&temperature,&deep);
 	if(deep<0)deep=0;
 	frame.fdata[27]=deep;
+	OLED_ShowNumber(64, 36, (int)(temperature*100), 3, 12);
 	//frame.fdata[28]=temperature;
 }
 
