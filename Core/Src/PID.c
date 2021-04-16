@@ -4,7 +4,7 @@
  *  Created on: 2020年7月1日
  *      Author: starstory_星辰物语
  */
-#include <deepSensor.h>
+#include "deepSensor.h"
 #include "PID.h"
 
 #include "VRU.h"
@@ -16,15 +16,15 @@
 //kp ti dt 输出 前1次误差 前2次误差
 float pid_ver[6][7] =
     {
-        {0.03, 0.00004, 0.2},
-        {-0.015, -0.00006, -0.3},
+        {0.015, 0.00003, 0.2},
+        {-0.015, -0.00005, -0.3},
         {-0.003, 0, -0.1},
-        {1, 0.004, 1},
+        {1.3, 0.0005, 1.35},
         {1, 0, 0},
         {1, 0, 0},
 };
 //Roll,Pitch,Yaw,z x y
-float target_ver[6];
+float target_ver[6]={};
 int pidinit = 0;
 void PID_init()
 {
@@ -32,6 +32,8 @@ void PID_init()
     target_ver[1] = 0;
     target_ver[2] = yaw;
     target_ver[3] = 0.05;
+    target_ver[4] = 0;
+    target_ver[5] = 0;
     pidinit = 1;
 }
 
