@@ -1296,7 +1296,7 @@ Disassembly of section .text:
  8000f9a:	bf00      	nop
 
 08000f9c <PID_init>:
-};
+*/
 //Roll,Pitch,Yaw,z x y
 float target_ver[6]={};
 int pidinit = 0;
