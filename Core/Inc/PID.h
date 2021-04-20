@@ -16,6 +16,6 @@ void PID_init();
 //extern float Kpl, Til, Kpr, Tir;
 extern int pidinit;
 extern float target_ver[6];
-float pid_ver[6][7];
+extern float pid_ver[6][7];
 
 #endif /* INC_PID_H_ */
